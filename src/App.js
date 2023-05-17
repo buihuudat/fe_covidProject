@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { ThemeProvider, createTheme } from "@mui/material";
+import { Routes, Route } from "react-router-dom";
 
-function App() {
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import CssBaseline from "@mui/material/CssBaseline";
+import HomePage from "./pages/HomePage";
+import AppLayout from "./layouts/AppLayout";
+import PrevetionPage from "./pages/PrevetionPage";
+import AuthLayout from "./layouts/AuthLayout";
+import LoginPage from "./pages/auth/LoginPage";
+import RegisterPage from "./pages/auth/RegisterPage";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+const App = () => {
+  const theme = createTheme({
+    palette: {
+      mode: "light",
+    },
+  });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <ToastContainer />
+      <Routes>
+        <Route path="/" element={<AuthLayout />}>
+          <Route path="dang-nhap" element={<LoginPage />} />
+          <Route path="dang-ky" element={<RegisterPage />} />
+        </Route>
+        <Route path="/" element={<AppLayout />}>
+          <Route index path="/" element={<HomePage />} />
+          <Route index path="phong-chong" element={<PrevetionPage />} />
+        </Route>
+      </Routes>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
